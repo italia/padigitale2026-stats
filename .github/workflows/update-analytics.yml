@@ -1,0 +1,19 @@
+on:
+  schedule:
+    - cron: "30 1 * * *"
+  workflow_dispatch:
+
+jobs:
+  update-token:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - run: ./get-analytics.sh
+        env:
+          WAI_SITE_ID: ${{ secrets.WAI_SITE_ID }}
+          WAI_TOKEN: ${{ secrets.WAI_TOKEN }}
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore: update analytics data"

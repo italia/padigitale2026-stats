@@ -4,13 +4,18 @@ on:
   workflow_dispatch:
 
 jobs:
-  update-token:
+  update-analytics:
+    name: Update analytics
     runs-on: ubuntu-latest
     permissions:
       contents: write
     steps:
       - uses: actions/checkout@v4
-      - run: ./get-analytics.sh
+      - name: Install Deno
+        uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+      - run: deno --allow-env --allow-net --allow-read --allow-write get-analytics.ts
         env:
           WAI_SITE_ID: ${{ secrets.WAI_SITE_ID }}
           WAI_TOKEN: ${{ secrets.WAI_TOKEN }}

@@ -77,10 +77,6 @@ try {
     token_auth: `${waiToken}`,
   });
 
-  console.log(
-    `https://webanalytics.italia.it/matomo/index.php?${params.toString()}`
-  );
-
   const res = await fetch(
     `https://webanalytics.italia.it/matomo/index.php?${params.toString()}`
   );
